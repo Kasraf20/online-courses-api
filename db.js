@@ -2,10 +2,10 @@ const mongoose = require("mongoose");
 require('dotenv').config()
 
 //Local DataBase
-MONGO_URL = 'mongodb://127.0.0.1:27017/online-courses'
+// MONGO_URL = 'mongodb://127.0.0.1:27017/online-courses'
 
 //Cloud Database
-// const MONGO_URL = process.env.DB_URL
+const MONGO_URL = process.env.DB_URL
 
 mongoose.connect(MONGO_URL);
 

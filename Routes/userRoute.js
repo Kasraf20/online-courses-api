@@ -6,6 +6,7 @@ const cloudinary = require("../Utils/Cloudinary");
 const User = require("../Models/userModel");
 const Course = require("../Models/courseModel")
 const { jwtAuthMiddleware, generateToken } = require("../Middleware/jwt");
+const sendMail = require("../Utils/sendEmail")
 
 const router = express.Router();
 /************************Get All Users****************************** */
@@ -32,6 +33,10 @@ router.post("/", upload.single("profileImage"), async (req, res) => {
           return res.json({ err: "admin already exists." });
         }
       }
+      //check email uniqness.
+      const emailFound = await User.findOne({email: req.body.email})
+      if(emailFound) return res.json({message: 'email already exist.'})
+      
       const newUser = new User({
         name: req.body.name,
         email: req.body.email,
@@ -69,6 +74,30 @@ router.post("/", upload.single("profileImage"), async (req, res) => {
     res.status(500).json({message : 'internal server error'})
   }
 });
+
+
+/************************Forget Password***************************** */
+router.post('/forget-password', async (req,res) => {
+  const email = req.body.email
+  console.log(email)
+  try{
+    const user = await User.findOne({email})
+    console.log(user)
+    if(!user){
+      res.status(400).json({message: "User Not Found."})
+    }else{
+      await sendMail(
+        '18co29@aiktc.ac.in',
+        email,
+        'forget password',
+        '<p>forget password email.</p>'
+      )
+      res.status(200).json({message: "Forgot password email sent successfully:"})
+    }
+  }catch(err){
+    res.status(400).json({message: "internal server error"})
+  }
+})
 
 
 /************************Login****************************** */
