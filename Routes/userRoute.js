@@ -2,7 +2,7 @@ const express = require("express");
 const bcrypt = require("bcrypt");
 
 const upload = require("../Middleware/uploadImage");
-const cloudinary = require("../Utils/Cloudinary");
+const cloudinary = require("../Utils/cloudinary");
 const User = require("../Models/userModel");
 const Course = require("../Models/courseModel")
 const { jwtAuthMiddleware, generateToken } = require("../Middleware/jwt");
