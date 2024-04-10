@@ -3,7 +3,7 @@ const express = require("express");
 const Course = require("../Models/courseModel");
 const User = require("../Models/userModel");
 const upload = require("../Middleware/uploadImage");
-const cloudinary = require("../Utils/Cloudinary");
+const cloudinary = require("../Utils/cloudinary");
 const { jwtAuthMiddleware } = require("../Middleware/jwt");
 
 const router = express.Router();
